@@ -115,6 +115,7 @@ const DashboardTab = {
     const career  = DataStore.careerStats();
     const sorted  = Object.values(career).sort((a, b) => b.winPct - a.winPct);
     const sel     = this.selectedUid;
+    const isMobile = window.matchMedia('(max-width: 640px)').matches;
 
     const colors = sorted.map(m =>
       (!sel || m.userId === sel) ? '#63b3ed' : 'rgba(99,179,237,0.2)'
@@ -140,7 +141,7 @@ const DashboardTab = {
       options: {
         indexAxis: 'y',
         responsive: true,
-        layout: { padding: { right: 90 } },
+        layout: { padding: { right: isMobile ? 45 : 90 } },
         plugins: {
           legend: { display: false },
           tooltip: {
@@ -155,7 +156,7 @@ const DashboardTab = {
             font: { size: 11, weight: '600' },
             formatter: (val, ctx) => {
               const m = sorted[ctx.dataIndex];
-              return `${val}%  (${m.wins}–${m.losses})`;
+              return isMobile ? `${val}%` : `${val}%  (${m.wins}–${m.losses})`;
             },
           },
         },
