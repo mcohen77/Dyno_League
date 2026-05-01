@@ -1,0 +1,183 @@
+:root {
+  --bg-top: #071421;
+  --bg-bottom: #0d2f3f;
+  --panel: rgba(8, 21, 34, 0.8);
+  --panel-border: #2e5a78;
+  --accent: #f2b441;
+  --accent-alt: #50c2c9;
+  --text: #e8f2ff;
+  --muted: #9fc0d8;
+  --danger: #ff7e7e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  font-family: "Space Grotesk", sans-serif;
+  background: radial-gradient(circle at 10% 10%, #15435f, transparent 40%),
+    radial-gradient(circle at 90% 80%, #0e3e57, transparent 35%),
+    linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+}
+
+.field-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.12;
+  background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 34px,
+      #a9e2c9 35px
+    ),
+    repeating-linear-gradient(
+      to right,
+      transparent 0,
+      transparent 79px,
+      #ffffff 80px
+    );
+}
+
+.site-wrap {
+  width: min(1180px, 94vw);
+  margin: 1.4rem auto 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.hero {
+  text-align: center;
+  padding: 1rem 1rem 1.2rem;
+}
+
+.kicker {
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+  color: var(--accent-alt);
+  margin: 0;
+  font-weight: 700;
+}
+
+h1 {
+  margin: 0.2rem 0;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(2rem, 6vw, 4rem);
+  letter-spacing: 0.06rem;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--muted);
+}
+
+.grid-layout {
+  display: grid;
+  grid-template-columns: 1fr minmax(340px, 1.2fr) 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  backdrop-filter: blur(3px);
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.card h2 {
+  margin-top: 0;
+  color: var(--accent);
+}
+
+.teams ul,
+.trophy ol {
+  margin: 0;
+  padding-left: 1.1rem;
+  line-height: 1.7;
+}
+
+.trophy span {
+  color: var(--accent-alt);
+  font-weight: 700;
+  margin-right: 0.5rem;
+}
+
+.suggestion-box p {
+  margin-top: 0;
+  color: var(--muted);
+}
+
+form {
+  display: grid;
+  gap: 0.55rem;
+}
+
+label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+select,
+textarea,
+button {
+  font: inherit;
+  border-radius: 10px;
+}
+
+select,
+textarea {
+  border: 1px solid #406884;
+  background: #0d2234;
+  color: var(--text);
+  padding: 0.65rem 0.7rem;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button {
+  border: 0;
+  background: linear-gradient(120deg, var(--accent), #ee8244);
+  color: #1a1a1a;
+  font-weight: 700;
+  padding: 0.7rem 0.8rem;
+  cursor: pointer;
+}
+
+button:hover {
+  filter: brightness(1.05);
+}
+
+.response {
+  min-height: 3rem;
+  margin-top: 0.9rem;
+  border-radius: 10px;
+  padding: 0.75rem;
+  background: #0a1f30;
+  border: 1px solid #315771;
+  color: var(--muted);
+}
+
+.response .roast {
+  color: var(--danger);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.response .jk {
+  color: #9de5b2;
+}
+
+@media (max-width: 940px) {
+  .grid-layout {
+    grid-template-columns: 1fr;
+  }
+}

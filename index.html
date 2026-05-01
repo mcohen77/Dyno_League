@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Dyno League of the People</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Chart.defaults.color = '#94a3bc';
+      Chart.defaults.borderColor = 'rgba(255,255,255,0.09)';
+      // Unregister datalabels globally so it only activates on charts that opt in
+      Chart.unregister(ChartDataLabels);
+    });
+  </script>
+</head>
+<body>
+
+  <!-- Loading overlay -->
+  <div id="loading-screen">
+    <div class="spinner"></div>
+    <div id="loading-msg">Loading league data...</div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="site-logo">
+      The Dyno League
+      <span>of the People</span>
+    </div>
+    <div class="site-subtitle">Fantasy Football Analytics — Since 2019</div>
+  </header>
+
+  <!-- Tab navigation -->
+  <nav id="tab-nav">
+    <button class="nav-btn active" data-tab="overview">League Rules</button>
+    <button class="nav-btn" data-tab="suggestionbox">Suggestion Box</button>
+    <button class="nav-btn" data-tab="dashboard">Dashboard</button>
+    <button class="nav-btn" data-tab="history">Dyno History</button>
+    <button class="nav-btn" data-tab="rivalries">Rivalries</button>
+    <button class="nav-btn" data-tab="playoffs">Playoffs</button>
+    <button class="nav-btn" data-tab="trades">Trades</button>
+    <button class="nav-btn" data-tab="rookiedraft">Rookie Draft</button>
+  </nav>
+
+  <!-- Filter bar (shown after load) -->
+  <div id="filter-bar" style="display:none">
+    <div class="filter-inner">
+      <span class="filter-label">Season:</span>
+      <div id="year-btns" class="year-btn-group">
+        <!-- populated after load -->
+      </div>
+      <div class="filter-divider"></div>
+      <button id="former-toggle" class="former-btn" onclick="App.toggleFormerMembers()">
+        Show Former Members
+      </button>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <main id="app-root"></main>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/tabs/overview.js"></script>
+  <script src="js/tabs/dashboard.js"></script>
+  <script src="js/tabs/history.js"></script>
+  <script src="js/tabs/rivalries.js"></script>
+  <script src="js/tabs/playoffs.js"></script>
+  <script src="js/tabs/trades.js"></script>
+  <script src="js/tabs/rookiedraft.js"></script>
+  <script src="js/tabs/suggestionbox.js"></script>
+
+  <script>
+    const TABS = {
+      overview:    OverviewTab,
+      dashboard:   DashboardTab,
+      history:     HistoryTab,
+      rivalries:   RivalriesTab,
+      playoffs:    PlayoffsTab,
+      trades:      TradesTab,
+      rookiedraft:    RookieDraftTab,
+      suggestionbox:  SuggestionBoxTab,
+    };
+
+    const App = {
+      currentTab: 'overview',
+
+      // Tabs that should not show the season/filter bar
+      _noFilterBar: new Set(['overview', 'suggestionbox', 'trades']),
+
+      renderTab(tabKey) {
+        this.currentTab = tabKey;
+        document.querySelectorAll('.nav-btn').forEach(btn =>
+          btn.classList.toggle('active', btn.dataset.tab === tabKey)
+        );
+        Object.values(Chart.instances || {}).forEach(c => c.destroy());
+        const filterBar = document.getElementById('filter-bar');
+        if (filterBar) filterBar.style.display = this._noFilterBar.has(tabKey) ? 'none' : 'flex';
+        const root = document.getElementById('app-root');
+        root.innerHTML = TABS[tabKey].render();
+        TABS[tabKey].afterRender?.();
+      },
+
+      // Year filter: normal click = single select, Ctrl/Cmd+click = multi-select
+      selectYear(event, season) {
+        const multi = event.ctrlKey || event.metaKey;
+        const current = DataStore.activeSeasons;
+
+        if (multi) {
+          // Toggle this season in/out of the set
+          const next = new Set(current || []);
+          if (next.has(season)) next.delete(season);
+          else next.add(season);
+          DataStore.setSeasonFilter(next.size > 0 ? next : null);
+        } else {
+          // Single-select: if already the only selection, go back to All
+          const isSoleSelection = current && current.size === 1 && current.has(season);
+          DataStore.setSeasonFilter(isSoleSelection ? null : season);
+        }
+
+        this.updateYearButtons();
+        this.renderTab(this.currentTab);
+      },
+
+      clearYearFilter() {
+        DataStore.setSeasonFilter(null);
+        this.updateYearButtons();
+        this.renderTab(this.currentTab);
+      },
+
+      updateYearButtons() {
+        const active = DataStore.activeSeasons;
+        document.querySelectorAll('.year-btn[data-season]').forEach(btn => {
+          btn.classList.toggle('active', active ? active.has(btn.dataset.season) : false);
+        });
+        const allBtn = document.getElementById('all-years-btn');
+        if (allBtn) allBtn.classList.toggle('active', !active || active.size === 0);
+      },
+
+      toggleFormerMembers() {
+        DataStore.hideFormerMembers = !DataStore.hideFormerMembers;
+        const btn = document.getElementById('former-toggle');
+        if (DataStore.hideFormerMembers) {
+          btn.textContent = 'Show Former Members';
+          btn.classList.add('former-hidden');
+        } else {
+          btn.textContent = 'Hide Former Members';
+          btn.classList.remove('former-hidden');
+        }
+        this.renderTab(this.currentTab);
+      },
+
+      buildFilterBar() {
+        const bar = document.getElementById('filter-bar');
+        const container = document.getElementById('year-btns');
+        const seasons = DataStore.seasons.map(s => s.season);
+
+        container.innerHTML = `
+          <button id="all-years-btn" class="year-btn active" onclick="App.clearYearFilter()">All</button>
+          ${seasons.map(s => `
+            <button class="year-btn" data-season="${s}" onclick="App.selectYear(event, '${s}')">${s}</button>
+          `).join('')}
+        `;
+        bar.style.display = 'flex';
+
+        // Set initial former member button state (default: former members hidden)
+        DataStore.hideFormerMembers = true;
+        const btn = document.getElementById('former-toggle');
+        btn.textContent = 'Show Former Members';
+        btn.classList.add('former-hidden');
+      },
+    };
+
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.addEventListener('click', () => App.renderTab(btn.dataset.tab));
+    });
+
+    async function boot() {
+      const loadingMsg = document.getElementById('loading-msg');
+      try {
+        await DataStore.load(msg => { loadingMsg.textContent = msg; });
+        document.getElementById('loading-screen').style.display = 'none';
+        App.buildFilterBar();
+        App.renderTab('overview');
+      } catch (err) {
+        loadingMsg.textContent = 'Error loading data: ' + err.message;
+        console.error(err);
+      }
+    }
+
+    boot();
+  </script>
+</body>
+</html>

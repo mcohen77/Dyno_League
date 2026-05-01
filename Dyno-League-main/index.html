@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Dyno League of the People</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="field-overlay"></div>
+  <main class="site-wrap">
+    <header class="hero">
+      <p class="kicker">Dynasty Fantasy Football</p>
+      <h1>The Dyno League of the People</h1>
+      <p class="subtitle">Built for glory, trash talk, and immortal receipts.</p>
+    </header>
+
+    <section class="grid-layout">
+      <aside class="card teams">
+        <h2>Team Names</h2>
+        <ul>
+          <li>FYF</li>
+          <li>The Rodfathers Dynasty</li>
+          <li>Roster Wood</li>
+          <li>BUDSandSMUSH</li>
+          <li>TB12</li>
+          <li>LEONandGAIA</li>
+          <li>Bmisk</li>
+          <li>Kvolks</li>
+          <li>PolandSpring</li>
+          <li>Poopiesnot</li>
+        </ul>
+      </aside>
+
+      <section class="card suggestion-box" aria-labelledby="suggestion-title">
+        <h2 id="suggestion-title">League Suggestion Box</h2>
+        <p>Drop your best idea for rules, payouts, draft chaos, or league upgrades.</p>
+
+        <form id="suggestionForm">
+          <label for="teamName">Your Team Name</label>
+          <select id="teamName" name="teamName" required>
+            <option value="">Select your team</option>
+            <option>FYF</option>
+            <option>The Rodfathers Dynasty</option>
+            <option>Roster Wood</option>
+            <option>BUDSandSMUSH</option>
+            <option>TB12</option>
+            <option>LEONandGAIA</option>
+            <option>Bmisk</option>
+            <option>Kvolks</option>
+            <option>PolandSpring</option>
+            <option>Poopiesnot</option>
+          </select>
+
+          <label for="suggestion">Suggestion</label>
+          <textarea id="suggestion" name="suggestion" rows="5" placeholder="Type your suggestion here..." required></textarea>
+
+          <button type="submit">Submit Suggestion</button>
+        </form>
+
+        <div id="responseBox" class="response" aria-live="polite"></div>
+      </section>
+
+      <aside class="card trophy">
+        <h2>Dyno Trophy Room</h2>
+        <ol>
+          <li><span>2020</span> PolandSpring</li>
+          <li><span>2021</span> Roster Wood</li>
+          <li><span>2022</span> BUDSandSMUSH &amp; Bmisk (Tie)</li>
+          <li><span>2023</span> The Rodfathers Dynasty</li>
+          <li><span>2024</span> The Rodfathers Dynasty</li>
+          <li><span>2025</span> The Rodfathers Dynasty</li>
+        </ol>
+      </aside>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

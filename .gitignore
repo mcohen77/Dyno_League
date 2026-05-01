@@ -1,0 +1,18 @@
+# Claude Code project config
+.claude/
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+
+# Node (in case it's ever introduced)
+node_modules/
