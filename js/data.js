@@ -1,5 +1,5 @@
 // Central data store — loads all historical seasons once, then components read from here
-const CURRENT_LEAGUE_ID = '1183486636709539840';
+const CURRENT_LEAGUE_ID = '1355649244354060288';
 const LEAGUE_DISPLAY_NAME = 'The Dyno League of the People';
 
 // Former members — matched by display_name or team_name (case-insensitive)
