@@ -1041,3 +1041,184 @@ canvas {
   padding: 1rem;
   border: 1px solid var(--glass-border);
 }
+
+/* ─────────────────────────────────────────────────────────────
+   MOBILE OPTIMIZATIONS — phones ≤640px
+   Desktop is untouched; everything here only applies on phones.
+───────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+
+  body { font-size: 14px; }
+
+  /* Page padding */
+  main {
+    padding: 1.25rem 1rem;
+    max-width: 100%;
+  }
+
+  .section { margin-bottom: 2rem; }
+
+  /* Header — stack logo and subtitle vertically */
+  .site-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    padding: 0.85rem 1rem;
+  }
+  .site-logo { font-size: 1.5rem; }
+  .site-logo span { font-size: 0.74em; }
+  .site-subtitle {
+    text-align: left;
+    font-size: 0.66rem;
+    width: 100%;
+  }
+
+  /* Nav — tighter pills */
+  nav {
+    padding: 0.4rem 0.75rem;
+    gap: 0.15rem;
+  }
+  .nav-btn {
+    padding: 0.4rem 0.85rem;
+    font-size: 0.8rem;
+  }
+
+  /* Filter bar */
+  #filter-bar { padding: 0.4rem 1rem; }
+  .filter-label { font-size: 0.7rem; }
+  .year-btn { padding: 0.18rem 0.55rem; font-size: 0.72rem; }
+  .former-btn { padding: 0.18rem 0.7rem; font-size: 0.72rem; }
+
+  /* Section titles */
+  .section-title {
+    font-size: 1.05rem;
+    padding-left: 0.7rem;
+  }
+  .section-sub {
+    font-size: 0.78rem;
+    padding-left: 0.8rem;
+  }
+
+  /* League banner */
+  .league-banner { padding: 1.25rem 1.25rem; }
+  .league-banner h2 { font-size: 1.2rem; }
+  .league-meta { gap: 0.85rem; font-size: 0.78rem; }
+
+  /* Manager cards — fit two per row on most phones */
+  .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.7rem;
+  }
+  .manager-card { padding: 1.2rem 0.85rem 1rem; }
+  .card-rank { font-size: 1.3rem; }
+  .card-name { font-size: 0.82rem; margin-bottom: 0.85rem; }
+  .card-stats { gap: 0.3rem; }
+  .stat-val { font-size: 0.92rem; }
+  .stat-lbl { font-size: 0.55rem; letter-spacing: 0.4px; }
+
+  /* Fact cards */
+  .fun-facts {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.7rem;
+  }
+  .fact-card { padding: 1rem 0.85rem; }
+  .fact-icon { font-size: 1.4rem; margin-bottom: 0.4rem; }
+  .fact-val { font-size: 0.92rem; }
+  .fact-sub { font-size: 0.7rem; }
+
+  /* Trade summary cards — stack vertically with smaller numbers */
+  .trade-summary-strip {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+    margin-bottom: 1.25rem;
+  }
+  .trade-summary-strip .trade-stat { padding: 1rem 1.25rem; }
+  .trade-stat-val { font-size: 1.55rem; }
+  .trade-stat-lbl { font-size: 0.65rem; }
+
+  /* Trade cards — stack the two sides vertically */
+  .trade-card-header { padding: 0.5rem 1rem; font-size: 0.74rem; }
+  .trade-sides { flex-direction: column; }
+  .trade-side { padding: 0.85rem 1.1rem; }
+  .trade-side + .trade-side {
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .trade-divider { display: none; }
+  .trade-team-name { font-size: 0.82rem; }
+
+  /* Trade filters */
+  .trade-filter-right { width: 100%; margin-left: 0; }
+  .trade-filters select { width: 100%; }
+
+  /* Bracket cards — single column */
+  .bracket-seasons { grid-template-columns: 1fr; gap: 0.75rem; }
+  .bracket-season-card { padding: 1.15rem 1.1rem; }
+  .bracket-season-year { font-size: 1.1rem; margin-bottom: 0.7rem; }
+  .place-row { font-size: 0.82rem; }
+
+  /* Rivalry cards */
+  .rivalry-grid { grid-template-columns: 1fr; gap: 0.7rem; }
+  .focused-header { padding: 1rem 1.15rem; }
+  .focused-name { font-size: 1.15rem; margin-bottom: 0.85rem; }
+  .focused-badges { gap: 0.5rem; }
+  .focused-badge { padding: 0.4rem 0.7rem; }
+
+  /* Tables — smaller text, tighter padding, horizontal scroll on overflow */
+  .data-table { font-size: 0.78rem; }
+  .data-table th, .data-table td {
+    padding: 0.55rem 0.7rem;
+  }
+  .data-table th {
+    font-size: 0.62rem;
+    letter-spacing: 0.5px;
+  }
+
+  /* H2H matrix — even more compact */
+  .h2h-table th, .h2h-table td {
+    padding: 0.28rem 0.4rem;
+    font-size: 0.68rem;
+  }
+
+  /* Constitution accordion */
+  .ca-header {
+    padding: 0.78rem 1rem;
+    font-size: 0.85rem;
+    gap: 0.6rem;
+  }
+  .ca-icon { font-size: 1rem; }
+  .ca-body { padding: 0 1rem 0.95rem; }
+  .ca-list { font-size: 0.83rem; padding-left: 1rem; }
+  .ca-p { font-size: 0.83rem; }
+
+  /* Suggestion box */
+  .suggestion-panel { padding: 1.5rem 1.25rem; }
+  .suggestion-desc { font-size: 0.83rem; margin-bottom: 1.2rem; }
+
+  /* Manager pill selector */
+  .mgr-btn { padding: 0.28rem 0.8rem; font-size: 0.78rem; }
+
+  /* Draft season tabs */
+  .draft-season-btn { padding: 0.28rem 0.75rem; font-size: 0.8rem; }
+
+  /* Charts — slightly less padding */
+  canvas { padding: 0.6rem; }
+
+  /* Two-col already handled by existing 820px breakpoint */
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Very small phones (≤380px) — extra polish
+───────────────────────────────────────────────────────────── */
+@media (max-width: 380px) {
+  main { padding: 1rem 0.75rem; }
+  .site-header { padding: 0.75rem 0.85rem; }
+  .site-logo { font-size: 1.35rem; }
+  nav { padding: 0.35rem 0.6rem; }
+  .nav-btn { padding: 0.35rem 0.7rem; font-size: 0.76rem; }
+
+  /* Manager cards — single column on smallest phones */
+  .card-grid { grid-template-columns: 1fr; }
+
+  /* Fun facts — two-up at most */
+  .fun-facts { grid-template-columns: repeat(2, 1fr); }
+}
