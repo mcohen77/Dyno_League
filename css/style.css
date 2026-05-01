@@ -1043,6 +1043,25 @@ canvas {
 }
 
 /* ─────────────────────────────────────────────────────────────
+   HEADER — stack vertically on tablets, landscape phones, small laptops
+   Triggers earlier than the main mobile block because the long subtitle
+   with white-space: nowrap squeezes the logo at intermediate widths.
+───────────────────────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .site-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
+    padding: 0.9rem 1.5rem;
+  }
+  .site-subtitle {
+    text-align: left;
+    width: 100%;
+    white-space: normal;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
    MOBILE OPTIMIZATIONS — phones ≤640px
    Desktop is untouched; everything here only applies on phones.
 ───────────────────────────────────────────────────────────── */
